@@ -9,6 +9,7 @@
 **The plugin lets you create profiles which apply Glamourer designs, Customize+ profiles, and Penumbra collections to currently loaded characters based on various filters. Current filters are: Player/NPC (including filtering for/against the user's character), Race, Gender, and Job.**
 
 
+I might update it in the future, but only for my own needs. Feel free to take the mod and improve/change it how you want.
 
 ### Dalamud installation
 
