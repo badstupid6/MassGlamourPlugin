@@ -1,6 +1,6 @@
 # MassGlamour
 
-<sub>I spent a long time looking for something to mass apply Glamourer designs to characters and nothing came of it (the Glamourer devs seem very against implementing it for some reason too), thus I decided to throw this together for myself.</sub>
+<sub>I spent a long time looking for something to mass apply Glamourer designs to characters and nothing came of it (the Glamourer devs seem very against implementing it for some reason too), thus I decided to throw this together for myself and figured I'd upload it too.</sub>
 
 <sub>This is vibe-coded garbage because I couldn't be bothered to learn how to make a plugin or read all the required APIs, but I haven't run into any bugs besides some NPC animations breaking, which already happens with manually using Glamourer.</sub>
 
