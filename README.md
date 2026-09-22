@@ -19,7 +19,11 @@ Add this repository URL in Dalamud's custom plugin repositories:
 ## Credits
 
 [DynamicBridge](https://github.com/NightmareXIV/DynamicBridge) for how to get lists of designs, profiles, and collections
+
 [Glamourer](https://github.com/Ottermandias/Glamourer)
+
 [Customize+](https://github.com/XIV-Tools/CustomizePlus)
+
 [Penumbra](https://github.com/xivdev/Penumbra)
+
 [Dalamud](https://github.com/goatcorp/Dalamud)
