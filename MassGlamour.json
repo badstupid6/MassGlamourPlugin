@@ -2,7 +2,7 @@
   "Author": "You",
   "Name": "MassGlamour",
   "InternalName": "MassGlamour",
-  "AssemblyVersion": "1.0.1.0",
+  "AssemblyVersion": "1.0.2.0",
   "Description": "Automatically applies Glamourer and Customize+ profiles to drawn characters based on specific filters.",
   "ApplicableVersion": "any",
   "DalamudApiLevel": 15
