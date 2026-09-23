@@ -5,6 +5,7 @@ using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MassGlamour;
 
@@ -16,8 +17,8 @@ public sealed class Plugin : IDalamudPlugin
     private readonly Configuration _configuration;
     private readonly PluginUI _ui;
 
-    // We track pointers to know when a character has been drawn/rendered for the first time
-    private readonly HashSet<nint> _seenPointers = new();
+    // We track pointers and object indices to detect unloaded characters and clear their assignments.
+    private readonly Dictionary<nint, int> _seenObjects = new();
 
     public Plugin(IDalamudPluginInterface pluginInterface)
     {
@@ -66,8 +67,10 @@ public sealed class Plugin : IDalamudPlugin
 
             IpcManager.ResetGlamourerState(obj.ObjectIndex);
             IpcManager.ResetCustomizeProfile(obj.ObjectIndex);
-            IpcManager.SetPenumbraCollection(null, obj.ObjectIndex);
+            IpcManager.ClearPenumbraCollection(obj.ObjectIndex);
         }
+
+        _seenObjects.Clear();
 
         Service.PluginLog.Information("MassGlamour: Reset requested for all currently loaded characters.");
     }
@@ -110,15 +113,18 @@ public sealed class Plugin : IDalamudPlugin
             currentPointers.Add(obj.Address);
 
             // If we haven't seen this object pointer yet, it just loaded/drew in.
-            if (!_seenPointers.Contains(obj.Address))
+            if (!_seenObjects.ContainsKey(obj.Address))
             {
-                _seenPointers.Add(obj.Address);
+                _seenObjects.Add(obj.Address, obj.ObjectIndex);
                 ApplyProfilesToObject(obj);
             }
         }
 
-        // Intersect prevents memory leaking by removing pointers of characters that left render distance
-        _seenPointers.IntersectWith(currentPointers);
+        foreach (var unloadedObject in _seenObjects.Keys.Except(currentPointers).ToList())
+        {
+            IpcManager.ClearPenumbraCollection(_seenObjects[unloadedObject]);
+            _seenObjects.Remove(unloadedObject);
+        }
     }
 
     public void ApplyToAllCurrent()

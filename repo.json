@@ -3,12 +3,12 @@
     "Author": "Badstupid6",
     "Name": "MassGlamour",
     "InternalName": "MassGlamour",
-    "AssemblyVersion": "1.0.3.0",
+    "AssemblyVersion": "1.0.4.0",
     "Description": "Automatically applies Glamourer, Customize+, and Penumbra profiles to drawn characters based on filters.",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
     "RepoUrl": "https://github.com/badstupid6/MassGlamourPlugin",
-    "DownloadLinkInstall": "https://github.com/badstupid6/MassGlamourPlugin/releases/download/v1.0.3/MassGlamour.zip",
-    "DownloadLinkUpdate": "https://github.com/badstupid6/MassGlamourPlugin/releases/download/v1.0.3/MassGlamour.zip"
+    "DownloadLinkInstall": "https://github.com/badstupid6/MassGlamourPlugin/releases/download/v1.0.4/MassGlamour.zip",
+    "DownloadLinkUpdate": "https://github.com/badstupid6/MassGlamourPlugin/releases/download/v1.0.4/MassGlamour.zip"
   }
 ]

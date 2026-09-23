@@ -106,6 +106,11 @@ public static class IpcManager
         }
     }
 
+    public static void ClearPenumbraCollection(int objectIndex)
+    {
+        SetPenumbraCollection(null, objectIndex);
+    }
+
     public static void ResetGlamourerState(int objectIndex)
     {
         try
