@@ -38,11 +38,14 @@ public sealed class Plugin : IDalamudPlugin
         Service.PluginInterface.UiBuilder.Draw += DrawUI;
         Service.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
         Service.Framework.Update += OnFrameworkUpdate;
+        Service.ClientState.TerritoryChanged += OnTerritoryChanged;
     }
 
     public void Dispose()
     {
         Service.Framework.Update -= OnFrameworkUpdate;
+        Service.ClientState.TerritoryChanged -= OnTerritoryChanged;
+        ClearTrackedPenumbraAssignments();
         Service.PluginInterface.UiBuilder.Draw -= DrawUI;
         Service.PluginInterface.UiBuilder.OpenConfigUi -= DrawConfigUI;
         Service.CommandManager.RemoveHandler(CommandName);
@@ -70,7 +73,7 @@ public sealed class Plugin : IDalamudPlugin
             IpcManager.ClearPenumbraCollection(obj.ObjectIndex);
         }
 
-        _seenObjects.Clear();
+        ClearTrackedPenumbraAssignments();
 
         Service.PluginLog.Information("MassGlamour: Reset requested for all currently loaded characters.");
     }
@@ -98,6 +101,20 @@ public sealed class Plugin : IDalamudPlugin
 
     private void DrawUI() => _ui.Draw();
     private void DrawConfigUI() => OnCommand(string.Empty, string.Empty);
+
+    private void OnTerritoryChanged(uint territoryId)
+    {
+        ClearTrackedPenumbraAssignments();
+        Service.PluginLog.Information($"MassGlamour: Cleared tracked Penumbra assignments for territory {territoryId}.");
+    }
+
+    private void ClearTrackedPenumbraAssignments()
+    {
+        foreach (var objectIndex in _seenObjects.Values.Distinct().ToList())
+            IpcManager.ClearPenumbraCollection(objectIndex);
+
+        _seenObjects.Clear();
+    }
 
     private void OnFrameworkUpdate(IFramework framework)
     {
