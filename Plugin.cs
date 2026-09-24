@@ -19,6 +19,7 @@ public sealed class Plugin : IDalamudPlugin
 
     // We track pointers and object indices to detect unloaded characters and clear their assignments.
     private readonly Dictionary<nint, int> _seenObjects = new();
+    private readonly HashSet<int> _affectedPenumbraObjects = new();
 
     public Plugin(IDalamudPluginInterface pluginInterface)
     {
@@ -110,9 +111,10 @@ public sealed class Plugin : IDalamudPlugin
 
     private void ClearTrackedPenumbraAssignments()
     {
-        foreach (var objectIndex in _seenObjects.Values.Distinct().ToList())
+        foreach (var objectIndex in _affectedPenumbraObjects)
             IpcManager.ClearPenumbraCollection(objectIndex);
 
+        _affectedPenumbraObjects.Clear();
         _seenObjects.Clear();
     }
 
@@ -177,6 +179,7 @@ public sealed class Plugin : IDalamudPlugin
                 if (profile.PenumbraCollectionId != Guid.Empty)
                 {
                     IpcManager.SetPenumbraCollection(profile.PenumbraCollectionId, obj.ObjectIndex);
+                    _affectedPenumbraObjects.Add(obj.ObjectIndex);
                 }
 
                 if (profile.CustomizeProfileId != Guid.Empty)
