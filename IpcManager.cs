@@ -106,9 +106,10 @@ public static class IpcManager
         }
     }
 
+    // Keep null as the Penumbra unassignment value after removing the unsupported event path.
     public static void ClearPenumbraCollection(int objectIndex)
     {
-        SetPenumbraCollection(Guid.Empty, objectIndex);
+        SetPenumbraCollection(null, objectIndex);
     }
 
     public static void ResetGlamourerState(int objectIndex)

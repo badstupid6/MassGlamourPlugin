@@ -166,6 +166,8 @@ public sealed class Plugin : IDalamudPlugin
         // We only care about characters (Players, NPCs) that have customization data
         if (obj is not ICharacter character) return;
 
+        bool hasPenumbraAssignment = false;
+
         foreach (var profile in _configuration.Profiles)
         {
             if (!profile.Enabled) continue;
@@ -181,6 +183,7 @@ public sealed class Plugin : IDalamudPlugin
                 {
                     IpcManager.SetPenumbraCollection(profile.PenumbraCollectionId, obj.ObjectIndex);
                     _affectedPenumbraObjects.Add(obj.ObjectIndex);
+                    hasPenumbraAssignment = true;
                 }
 
                 if (profile.CustomizeProfileId != Guid.Empty)
@@ -188,6 +191,12 @@ public sealed class Plugin : IDalamudPlugin
                     IpcManager.ApplyCustomizeProfile(profile.CustomizeProfileId, obj.ObjectIndex);
                 }
             }
+
+        if (!hasPenumbraAssignment)
+        {
+            IpcManager.ClearPenumbraCollection(obj.ObjectIndex);
+            _affectedPenumbraObjects.Remove(obj.ObjectIndex);
+        }
         }
     }
 

@@ -104,7 +104,8 @@ public class PluginUI : IDisposable
             for (int i = 0; i < _configuration.Profiles.Count; i++)
             {
                 var profile = _configuration.Profiles[i];
-                if (ImGui.CollapsingHeader($"{profile.Name}###profile_{i}"))
+                string profileDisplayName = profile.Enabled ? $"* {profile.Name}" : profile.Name;
+                if (ImGui.CollapsingHeader($"{profileDisplayName}###profile_{i}"))
                 {
                     bool enabled = profile.Enabled;
                     if (ImGui.Checkbox($"Enabled###enable_{i}", ref enabled))
