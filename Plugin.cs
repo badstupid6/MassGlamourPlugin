@@ -13,6 +13,7 @@ public sealed class Plugin : IDalamudPlugin
 {
     public string Name => "MassGlamour";
     private const string CommandName = "/mglam";
+    private static readonly HashSet<uint> HumanoidRaceIds = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
 
     private readonly Configuration _configuration;
     private readonly PluginUI _ui;
@@ -211,7 +212,10 @@ public sealed class Plugin : IDalamudPlugin
         if (!profile.ApplyToNpc && isNpc) return false;
 
         // Customize[0] is Race, Customize[1] is Gender (0=Male, 1=Female)
-        if (profile.ValidRaces.Count > 0 && !profile.ValidRaces.Contains(character.Customize[0])) return false;
+        uint raceId = character.Customize[0];
+        if (!HumanoidRaceIds.Contains(raceId)) return false;
+
+        if (profile.ValidRaces.Count > 0 && !profile.ValidRaces.Contains(raceId)) return false;
         if (profile.ValidGenders.Count > 0 && !profile.ValidGenders.Contains(character.Customize[1])) return false;
 
         // Filter jobs
