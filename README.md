@@ -11,6 +11,8 @@
 
 I might update it in the future, but only for my own needs. Feel free to take the mod and improve/change it how you want.
 
+(Note: the plugin can only remove penumbra assignments for currently loaded characters; it is liable to fill your penumbra with individual assignments that you will have to manually remove if you want them gone, especially if you or the affected characters leave an area while the plugin is active)
+
 ### Dalamud installation
 
 Add this repository URL in Dalamud's custom plugin repositories:
